@@ -4,18 +4,22 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\User;
+use App\Models\JobLevel;
 
-class UserSeeder extends Seeder
+class JobLevelSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        User::factory()
+        JobLevel::factory()
             ->count(3)
-            ->unverified()
+            ->sequence(
+                ['level' => 'Junior'],
+                ['level' => 'Senior'],
+                ['level' => 'Leader'],
+            )
             ->create();
     }
 }
