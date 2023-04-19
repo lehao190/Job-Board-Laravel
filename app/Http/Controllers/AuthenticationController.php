@@ -49,12 +49,32 @@ class AuthenticationController extends Controller
 
     public function register(Request $request) {
         $credentials = $request->validate([
-            'name' => ['required', 'max: 15'],
+            'name' => ['required'],
             'email' => ['required', 'email', 'unique:users,email'],
             'password' => ['required', 'confirmed', 'min:8'],
         ]);
 
         $user = $this->userRepository->create($request);
+
+        $token = $user->createToken('authToken');
+
+        return response([
+            'user' => $user,
+            'token' => $token->plainTextToken,
+        ], 201);
+    }
+
+    public function registerAsEmployer(Request $request) {
+        $credentials = $request->validate([
+            'name' => ['required'],
+            'email' => ['required', 'email', 'unique:users,email'],
+            'password' => ['required', 'confirmed', 'min:8'],
+            'company_name' => ['required', 'unique:companies,name'],
+            'location' => ['required'],
+            'employees' => ['required']
+        ]);
+
+        $user = $this->userRepository->createEmployerUser($request);
 
         $token = $user->createToken('authToken');
 

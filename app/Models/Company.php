@@ -15,4 +15,11 @@ class Company extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    protected $fillable = [
+        'name',
+        'headquarters_location',
+        'employees',
+        'user_id'
+    ];
 }

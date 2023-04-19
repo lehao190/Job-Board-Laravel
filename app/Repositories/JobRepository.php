@@ -34,7 +34,7 @@ class JobRepository implements JobRepositoryInterface {
             'job_levels.level'
         )
         ->latest()
-        ->get();
+        ->paginate(5);
     }
 
     public function create($data) {}
