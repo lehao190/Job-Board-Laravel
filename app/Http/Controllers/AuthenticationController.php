@@ -5,17 +5,27 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use App\Models\User;
+
+use App\Interfaces\UserRepositoryInterface;
 
 class AuthenticationController extends Controller
 {
+
+    private UserRepositoryInterface $userRepository;
+
+    public function __construct(
+        UserRepositoryInterface $userRepository
+    ) {
+        $this->userRepository = $userRepository;
+    }
+
     public function login(Request $request) {
         $credentials = $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required'],
         ]);
 
-        $user = User::where('email', $request->email)->first();
+        $user = $this->userRepository->getByEmail($request->email);
 
         if(!$user) {
             return response([
@@ -44,12 +54,7 @@ class AuthenticationController extends Controller
             'password' => ['required', 'confirmed', 'min:8'],
         ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'user_type' => 'normal',
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+        $user = $this->userRepository->create($request);
 
         $token = $user->createToken('authToken');
 

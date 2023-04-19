@@ -4,19 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Interfaces\JobRepositoryInterface;
-use App\Interfaces\UserRepositoryInterface;
 
 class JobController extends Controller
 {
     private JobRepositoryInterface $jobRepository;
-    private UserRepositoryInterface $userRepository;
 
     public function __construct(
-        JobRepositoryInterface $jobRepository,
-        UserRepositoryInterface $userRepository
+        JobRepositoryInterface $jobRepository
     ) {
         $this->jobRepository = $jobRepository;
-        $this->userRepository = $userRepository;
     }
 
     /**
@@ -24,7 +20,7 @@ class JobController extends Controller
      */
     public function index()
     {
-        return $this->userRepository->get(2);
+        return $this->jobRepository->getAll();
     }
 
     /**
@@ -40,8 +36,7 @@ class JobController extends Controller
      */
     public function show(string $id)
     {
-        //
-        return 'Job details '.$id;
+        return $this->jobRepository->get($id);
     }
 
     /**
