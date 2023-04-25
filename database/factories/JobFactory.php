@@ -22,6 +22,7 @@ class JobFactory extends Factory
             'location' => fake()->address(),
             'salary' => 1000,
             'user_id' => 1,
+            'company_id' => 1,
             'job_level_id' => 1,
             'employment_type_id' => 1,
         ];

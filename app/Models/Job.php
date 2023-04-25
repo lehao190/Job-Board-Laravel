@@ -16,9 +16,19 @@ class Job extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function company(): BelongsTo
+    {
+        return $this->belongsTo(Company::class);
+    }
+
     // Job Model belongs to JobLevel model
     public function job_level(): BelongsTo
     {
         return $this->belongsTo(JobLevel::class);
+    }
+
+    public function employment_type(): BelongsTo
+    {
+        return $this->belongsTo(EmploymentType::class);
     }
 }

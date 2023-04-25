@@ -7,8 +7,7 @@ use App\Models\Job;
 
 class JobRepository implements JobRepositoryInterface {
     public function get($id) {
-        return Job::join('users', 'users.id', '=', 'jobs.user_id')
-        ->join('companies', 'users.id', '=', 'companies.user_id')
+        return Job::join('companies', 'jobs.company_id', '=', 'companies.id')
         ->join('employment_types', 'employment_types.id', '=', 'jobs.employment_type_id')
         ->join('job_levels', 'job_levels.id', '=', 'jobs.job_level_id')
         ->select(
@@ -22,8 +21,7 @@ class JobRepository implements JobRepositoryInterface {
     }
 
     public function getAll() {
-        return Job::join('users', 'users.id', '=', 'jobs.user_id')
-        ->join('companies', 'users.id', '=', 'companies.user_id')
+        return Job::join('companies', 'jobs.company_id', '=', 'companies.id')
         ->join('employment_types', 'employment_types.id', '=', 'jobs.employment_type_id')
         ->join('job_levels', 'job_levels.id', '=', 'jobs.job_level_id')
         ->select(
